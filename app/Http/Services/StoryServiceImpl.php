@@ -32,7 +32,7 @@ class StoryServiceImpl implements StoryService {
 
     public function getStoryById($id)
     {
-        $story =  Story::find($id);
+        $story =  Story::with('user', 'category')->find($id);
         if(!is_null($story)) return $story->toArray();
 
         throw new BadRequestHttpException('Data story not found');

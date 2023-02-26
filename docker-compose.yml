@@ -1,0 +1,55 @@
+version: "2.0"
+services:
+    app:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: cloudsigma.com/php
+        container_name: app
+        restart: always
+        tty: true
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www/html/
+        networks:
+            - my-story-network
+        volumes:
+            - ./:/var/www/html/
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: always
+        tty: true
+        ports:
+            - "8080:80"
+            - "443:443"
+        networks:
+            - my-story-network
+        volumes:
+            - ./:/var/www/html/
+            - ./docker/nginx:/etc/nginx/conf.d/
+    db:
+        image: mariadb:10.5
+        container_name: db
+        restart: always
+        tty: true
+        ports:
+            - "3306:3306"
+        environment:
+            MARIADB_DATABASE: db_my_story_template
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_USER: ${DB_USERNAME}
+            MARIADB_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - my-story-network
+        volumes:
+            - dbdata:/var/lib/mysql
+
+networks:
+    my-story-network:
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local

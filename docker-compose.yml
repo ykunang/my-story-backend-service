@@ -1,4 +1,4 @@
-version: "2.0"
+version: "3"
 services:
     app:
         build:
@@ -16,19 +16,32 @@ services:
             - my-story-network
         volumes:
             - ./:/var/www/html/
+        depends_on:
+            - db
     webserver:
         image: nginx:alpine
         container_name: webserver
         restart: always
         tty: true
-        ports:
-            - "8080:80"
-            - "443:443"
+        # ports:
+        #     - "8080:80"
+        #     - "443:443"
         networks:
             - my-story-network
+            - traefik
+
         volumes:
             - ./:/var/www/html/
             - ./docker/nginx:/etc/nginx/conf.d/
+
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.app.rule=Host(`pelatihan.semanja.xyz`)"
+            - "traefik.http.routers.app.tls=true"
+            - "traefik.http.routers.app.entrypoints=websecure"
+            - "traefik.http.routers.app.tls.certresolver=myresolver"
+            - "traefik.http.services.app.loadbalancer.server.port=80"
+            - "traefik.docker.network=traefik"
     db:
         image: mariadb:10.5
         container_name: db
@@ -37,7 +50,7 @@ services:
         ports:
             - "3306:3306"
         environment:
-            MARIADB_DATABASE: db_my_story_template
+            MARIADB_DATABASE: ${DB_DATABASE}
             MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
             MARIADB_USER: ${DB_USERNAME}
             MARIADB_PASSWORD: ${DB_PASSWORD}
@@ -49,7 +62,8 @@ services:
 networks:
     my-story-network:
         driver: bridge
-
+    traefik:
+        external: true
 volumes:
     dbdata:
         driver: local

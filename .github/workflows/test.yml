@@ -32,5 +32,6 @@ jobs:
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
+          mkdir public/stories/
           touch database/database.sqlite
           vendor/bin/phpunit

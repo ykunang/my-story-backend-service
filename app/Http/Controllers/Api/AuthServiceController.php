@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Services\AuthService;
-use Illuminate\Http\Request;
 
 
 class AuthServiceController extends Controller
@@ -29,6 +28,6 @@ class AuthServiceController extends Controller
 
     function getProfile() {
         $result = $this->auth->profile();
-        return $this->responseSuccess(data: $result);
+        return $this->responseSuccess(data: $result->toArray());
     }
 }

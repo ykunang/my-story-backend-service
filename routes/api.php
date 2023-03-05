@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthServiceController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\StoryServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     /**
      * story route
      */
+    Route::get('/categories', CategoryController::class);
     Route::resource('stories', StoryServiceController::class)->except([
         'edit', 'update', 'create',
     ]);

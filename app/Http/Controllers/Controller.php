@@ -13,8 +13,6 @@ class Controller extends BaseController
 
     protected function responseSuccess(int $httpCode = Response::HTTP_OK, array $data = null, $message= null)
     {
-        
-
         return sendResponse(data:$data, httpCode:$httpCode, message: $message);
     }
 

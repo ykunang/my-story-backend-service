@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthServiceController;
-use App\Http\Controllers\Api\StoryController;
 use App\Http\Controllers\Api\StoryServiceController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,12 +19,12 @@ Route::post('/auth/login', [AuthServiceController::class, 'login'])->middleware(
 Route::post('/auth/register', [AuthServiceController::class, 'register'])->middleware('throttle');
 
 
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware('auth:sanctum')->group(function () {
 
     /**
      * auth route
      */
-    Route::get('/user', [AuthServiceController::class, 'profile']);
+    Route::get('/user', [AuthServiceController::class, 'getProfile']);
 
 
     /**

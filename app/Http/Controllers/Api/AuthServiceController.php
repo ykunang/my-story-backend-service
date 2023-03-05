@@ -29,6 +29,6 @@ class AuthServiceController extends Controller
     public function getProfile()
     {
         $result = $this->auth->profile();
-        return $this->responseSuccess(data: $result);
+        return $this->responseSuccess(data: $result->toArray());
     }
 }

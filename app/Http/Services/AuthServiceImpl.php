@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 interface AuthService {
     function login($credential);
     function register($userData);
-    function profile();
+    function profile(): User;
 }
 
 class AuthServiceImpl implements AuthService{
@@ -31,7 +31,7 @@ class AuthServiceImpl implements AuthService{
         return $data->toArray();
     }
 
-    function profile() {
+    function profile(): User {
         return Auth::user();
     }
 }

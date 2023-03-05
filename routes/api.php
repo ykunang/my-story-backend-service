@@ -19,7 +19,7 @@ Route::post('/auth/login', [AuthServiceController::class, 'login'])->middleware(
 Route::post('/auth/register', [AuthServiceController::class, 'register'])->middleware('throttle');
 
 
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware('auth:sanctum')->group(function () {
 
     /**
      * auth route

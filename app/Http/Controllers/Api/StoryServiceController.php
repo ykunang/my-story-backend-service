@@ -9,7 +9,8 @@ use App\Http\Services\StoryService;
 class StoryServiceController extends Controller
 {
 
-    public function __construct(private StoryService $service) {}
+    public function __construct(private StoryService $service)
+    {}
 
     /**
      * Display a listing of the resource.

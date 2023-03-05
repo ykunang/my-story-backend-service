@@ -37,12 +37,13 @@ class StoryControllerTest extends TestCase
         $this->actingAs($this->getUser());
         // act
         $response = $this->post('/api/stories', [
-            'category_id' => random_int(1,4),
-            'title' => 'title',
-            'description'=> 'description',
-            'photo' => UploadedFile::fake()->image('avatar.jpg'),
-            $this->header,
-        ]);
+                'category_id' => random_int(1,4),
+                'title' => 'title',
+                'description'=> 'description',
+                'photo' => UploadedFile::fake()->image('avatar.jpg'),
+            ],
+            headers: $this->header
+        );
         /// assert
         $response->assertStatus(200);
         $this->assertNotNull($response->json('data'));

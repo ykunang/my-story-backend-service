@@ -16,6 +16,7 @@ abstract class TestCase extends BaseTestCase
         Artisan::call('migrate:fresh');
         Artisan::call('db:seed');
 
+        $this->header['x-api-key']= getenv('API_KEY');
         /**
          * remove log image
          */

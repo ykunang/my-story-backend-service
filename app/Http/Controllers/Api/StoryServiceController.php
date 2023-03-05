@@ -26,7 +26,11 @@ class StoryServiceController extends Controller
      */
     public function store(CreateStoryRequest $request)
     {
-        $result = $this->service->createStory($request);
+        $result = $this->service->createStory(
+            $request->safe()->except('photo'),
+            $request->file('photo'),
+            $request->user()->id
+        );
         return $this->responseSuccess(data: $result, message: 'Create story successfull');
     }
 

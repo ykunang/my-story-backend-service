@@ -3,12 +3,12 @@
 namespace App\Http\Services;
 
 use App\Models\Story;
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 interface StoryService
 {
-    function createStory(Request $request);
+    function createStory(array $data, UploadedFile $photo, $userId);
     function getStories();
     function getStoryById($id);
     function deleteStoryById($id);
@@ -16,14 +16,10 @@ interface StoryService
 
 class StoryServiceImpl implements StoryService
 {
-    public function createStory(Request $request)
+    public function createStory(array $data, UploadedFile $photo, $userId)
     {
-        $story = $request->safe()->all();
-
-        if ($request->has('photo')) {
-            $photo = $request->file('photo')->store('public/stories');
-            $story = array_merge($story, ['user_id' => $request->user()->id, 'photo' => $photo]);
-        }
+        $photoPath = $photo->store('public/stories');
+        $story = array_merge($data, ['user_id' => $userId, 'photo' => $photoPath]);
 
         return Story::create($story)->load('user', 'category')->toArray();
     }

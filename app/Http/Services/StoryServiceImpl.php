@@ -18,7 +18,7 @@ class StoryServiceImpl implements StoryService
 {
     public function createStory(array $data, UploadedFile $photo, $userId)
     {
-        $photoPath = $photo->store('public/stories');
+        $photoPath = $photo->store('stories');
         $story = array_merge($data, ['user_id' => $userId, 'photo' => $photoPath]);
 
         return Story::create($story)->load('user', 'category')->toArray();

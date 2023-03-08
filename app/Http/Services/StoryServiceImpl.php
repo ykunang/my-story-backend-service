@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Story;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 interface StoryService
@@ -38,6 +39,9 @@ class StoryServiceImpl implements StoryService
     public function deleteStoryById($id)
     {
         $story = Story::find($id);
+        if (Storage::exists($story->photo)) {
+            Storage::delete($story->photo);
+        }
         return !is_null($story) ? $story->delete(): throw new BadRequestHttpException(message: 'Data story not found');
     }
 }

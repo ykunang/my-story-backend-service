@@ -21,6 +21,6 @@ abstract class TestCase extends BaseTestCase
          * remove log image
          */
         $files = new Filesystem();
-        $files->cleanDirectory(public_path('stories'));
+        $files->cleanDirectory(storage_path('app/public/stories'));
     }
 }

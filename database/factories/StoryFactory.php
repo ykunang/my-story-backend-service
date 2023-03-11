@@ -22,7 +22,7 @@ class StoryFactory extends Factory
             'category_id' => random_int(1, 4),
             'title' => fake()->title(),
             'description' => fake()->text(100),
-            'photo' => fake()->image(dir: public_path('stories'), width:250, height:250, fullPath:false),
+            'photo' => fake()->image(dir: storage_path('app/public/stories'), width:250, height:250, fullPath:false),
         ];
     }
 }

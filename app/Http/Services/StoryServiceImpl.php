@@ -39,7 +39,7 @@ class StoryServiceImpl implements StoryService
     public function deleteStoryById($id)
     {
         $story = Story::find($id);
-        if (Storage::exists($story->photo)) {
+        if (!is_null($story) && Storage::exists($story->photo)) {
             Storage::delete($story->photo);
         }
         return !is_null($story) ? $story->delete(): throw new BadRequestHttpException(message: 'Data story not found');
